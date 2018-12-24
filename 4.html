@@ -3,91 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="lib/jquery-2.1.0.js"></script>
+    <script src="lib/jquery-1.7.1.js"></script>
     <style>
-       /* @import url(https://fonts.googleapis.com/css?family=Montserrat:700);
-            ::-moz-selection {
-                color: #FFF;
-                background: none;
-            }
-
-            ::selection {
-                color: #FFF;
-                background: none;
-            }*/
-
-        html {
-          height: 100%;
+        #clock {
+          position: relative;
+          width: 600px;
+          height: 600px;
+          margin: 20px auto 0 auto;
+          background: url(clockface.jpg) no-repeat;
+          list-style: none;
         }
 
-        body {
-          height: 100%;
-          /*font-family: 'Montserrat', sans-serif;*/
-          text-align: center;
-          background: url("http://www.jq22.com/tp/73eb5179-2cea-485e-b09c-7972a05c2255.jpg") no-repeat left top;
-          background-size: cover;
-          overflow: hidden;
-        }
-
-        .hole {
-          margin: -250px 0 0 -250px;
-          width: 500px;
-          height: 500px;
-          box-shadow: 0 0 0 99999em #ccc; /*水平阴影 垂直阴影 模糊距离 阴影尺寸 阴影的颜色*/
-          border-radius: 50%;
-          cursor: pointer;
-          position: fixed;
-          /*transition: width .5s ease-in-out, height .5s ease-in-out, margin .5s ease-in-out;*/
-        }
-
-        .hole:after {
-          content: "";
-          display: block;
-          margin: -1% 0 0 -1%;
-          width: 102%;
-          height: 102%;
-          box-shadow: inset 0 0 50px 50px #ccc;
-          border-radius: 50%;
-        }
-
-        /*.hole:active {
-          margin: -250px 0 0 -250px;
-          width: 500px;
-          height: 500px;
-          transition: width 1s ease-in-out, height 1s ease-in-out, margin 1s ease-in-out;
-        }*/
-
-        p {
-          display: inline-block;
-          margin: -92px 0 0 -230px;
-          width: 460px;
-          height: 184px;
-          font-size: 100px;
-          color: #FFF;
-          text-align: center;
+        #sec, #min, #hour {
           position: absolute;
-          top: 50%;
-          left: 50%;
-          z-index:1;
+          width: 30px;
+          height: 600px;
+          top: 0px;
+          left: 285px;
         }
 
-        p span {
-          display: block;
-          font-size: 50px;
+        #sec {
+          background: url(sechand.png) no-repeat;
+          z-index: 3;
+        }
+           
+        #min {
+          background: url(minhand.png) no-repeat;
+          z-index: 2;
+        }
+           
+        #hour {
+          background: url(hourhand.png) no-repeat;
+          z-index: 1;
         }
     </style>
-
-    <script>
-        $(document).on("mousemove", function(event) {
-          $(".hole").css({
-            "top": event.pageY,
-            "left": event.pageX
-          });
-        });
-    </script>
 </head>
 <body>
-    <div class="hole"></div>
-    <p>Hole CSS<span>and Click Event</span></p>
+    <ul id="clock"> 
+        <li id="sec"></li>
+        <li id="hour"></li>
+        <li id="min"></li>
+    </ul>
+    <script>
+        $(function() {
+ 
+              setInterval( function() {
+              var seconds = new Date().getSeconds();
+              var sdegree = seconds * 6;
+              var srotate = "rotate(" + sdegree + "deg)";
+              
+              $("#sec").css({ "transform": srotate });
+                  
+              }, 1000 );
+              
+              setInterval( function() {
+              var hours = new Date().getHours();
+              var mins = new Date().getMinutes();
+              var hdegree = hours * 30 + (mins / 2);
+              var hrotate = "rotate(" + hdegree + "deg)";
+              
+              $("#hour").css({ "transform": hrotate});
+                  
+              }, 1000 );
+
+              setInterval( function() {
+              var mins = new Date().getMinutes();
+              var mdegree = mins * 6;
+              var mrotate = "rotate(" + mdegree + "deg)";
+              
+              $("#min").css({ "transform" : mrotate });
+                  
+              }, 1000 );
+         
+        });
+    </script>
 </body>
 </html>
